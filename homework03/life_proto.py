@@ -102,10 +102,10 @@ class GameOfLife:
         """
         if randomize:
             for h in range(self.cell_height):
-                self.grid.append([random.randint(0, 1) for w in range(self.cell_width)])
+                self.grid.append([random.randint(0, 1) for _ in range(self.cell_width)])
         else:
             for h in range(self.cell_height):
-                self.grid.append([0 for w in range(self.cell_width)])
+                self.grid.append([0 for _ in range(self.cell_width)])
 
         return self.grid
 

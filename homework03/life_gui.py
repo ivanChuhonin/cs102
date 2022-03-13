@@ -42,7 +42,7 @@ class GUI(UI):
         running = True
         while running:
             if self.life.curr_generation == self.life.max_generations or \
-                    self.life.is_changing == False:
+                    self.life.is_changing is False:
                 running = False
             for event in pygame.event.get():
                 if event.type == QUIT:

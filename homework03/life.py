@@ -2,9 +2,6 @@ import pathlib
 import random
 import typing as tp
 
-import pygame
-from pygame.locals import *
-
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
 Grid = tp.List[Cells]
@@ -12,10 +9,10 @@ Grid = tp.List[Cells]
 
 class GameOfLife:
     def __init__(
-        self,
-        size: tp.Tuple[int, int],
-        randomize: bool = True,
-        max_generations: tp.Optional[float] = float("inf"),
+            self,
+            size: tp.Tuple[int, int],
+            randomize: bool = True,
+            max_generations: tp.Optional[float] = float("inf"),
     ) -> None:
         # Размер клеточного поля
         self.rows, self.cols = size
@@ -28,15 +25,14 @@ class GameOfLife:
         # Текущее число поколений
         self.generations = 1
 
-
     def create_grid(self, randomize: bool = False) -> Grid:
         grid = []
         if randomize:
             for h in range(self.rows):
-                grid.append([random.randint(0, 1) for w in range(self.cols)])
+                grid.append([random.randint(0, 1) for _ in range(self.cols)])
         else:
             for h in range(self.rows):
-                grid.append([0 for w in range(self.cols)])
+                grid.append([0 for _ in range(self.cols)])
 
         return grid
 
@@ -206,7 +202,6 @@ class GameOfLife:
         game.curr_generation = newGrid
         return game
 
-
     def save(self, filename: pathlib.Path) -> None:
         """
         Сохранить текущее состояние клеток в указанный файл.
@@ -219,21 +214,21 @@ class GameOfLife:
         f = open(filename, "w")
         f.writelines(myOutput)
         f.close()
-
         pass
+
 
 if __name__ == '__main__':
     # game = GameOfLife.from_file('glider.txt')
-    game = GameOfLife((6, 8), max_generations = 18)
+    game = GameOfLife((6, 8), max_generations=18)
     game.curr_generation = [
-            [1, 1, 0, 0, 1, 1, 1, 1],
-            [0, 1, 1, 1, 1, 1, 1, 0],
-            [1, 0, 1, 1, 0, 0, 0, 0],
-            [1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 1, 1, 1, 0, 0],
-            [1, 1, 1, 1, 0, 1, 1, 1],
-        ]
+        [1, 1, 0, 0, 1, 1, 1, 1],
+        [0, 1, 1, 1, 1, 1, 1, 0],
+        [1, 0, 1, 1, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 1, 1, 1, 1, 0, 0],
+        [1, 1, 1, 1, 0, 1, 1, 1],
+    ]
     for i in range(7):
         game.step()
-        if i+1 in [1,3,5,7]:
+        if i + 1 in [1, 3, 5, 7]:
             print(game.curr_generation)
