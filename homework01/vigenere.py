@@ -1,6 +1,7 @@
+import string
+
 dictA = [chr(i) for i in range(65, 91)]
-dicta = [chr(i) for i in range(97, 123)]
-dict = dictA + dicta
+dict = list(string.ascii_uppercase)# + dicta
 
 def findIdx(c):
     return dict.index(c)
@@ -17,16 +18,24 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
 
-    base = 52
+    base = len(dict)
+    Ukeyword = keyword.upper()
+    Uplaintext = plaintext.upper()
     l = len(plaintext)
-    lk = len(keyword)
+    lk = len(Ukeyword)
     repeatN = l // lk
     remainder = l % lk
-    fullKey = keyword * repeatN + keyword[: remainder]
+    fullKey = Ukeyword * repeatN + Ukeyword[: remainder]
     result = []
-    for idx, val in enumerate(plaintext):
-        key = findIdx(plaintext[idx]) + findIdx(fullKey[idx])
-        result.append(dict[(key % base)])
+    for idx, val in enumerate(Uplaintext):
+        if plaintext[idx] in string.ascii_letters:
+            key = findIdx(Uplaintext[idx]) + findIdx(fullKey[idx])
+            if plaintext[idx].isupper():
+                result.append(dict[(key % base)])
+            else:
+                result.append(dict[(key % base)].lower())
+        else:
+            result.append(plaintext[idx])
     return ''.join(result)
 
 
@@ -41,16 +50,24 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     >>> decrypt_vigenere("LXFOPVEFRNHR", "LEMON")
     'ATTACKATDAWN'
     """
-    base = 52
+    base = len(dict)
+    Ukeyword = keyword.upper()
+    Uciphertext = ciphertext.upper()
     l = len(ciphertext)
     lk = len(keyword)
     repeatN = l // lk
     remainder = l % lk
-    fullKey = keyword * repeatN + keyword[: remainder]
+    fullKey = Ukeyword * repeatN + Ukeyword[: remainder]
     result = []
-    for idx, val in enumerate(ciphertext):
-        key = findIdx(ciphertext[idx]) - findIdx(fullKey[idx]) + base
-        result.append(dict[(key % base)])
+    for idx, val in enumerate(Uciphertext):
+        if ciphertext[idx] in string.ascii_letters:
+            key = findIdx(Uciphertext[idx]) - findIdx(fullKey[idx]) + base
+            if ciphertext[idx].isupper():
+                result.append(dict[(key % base)])
+            else:
+                result.append(dict[(key % base)].lower())
+        else:
+            result.append(ciphertext[idx])
     return ''.join(result)
 
 
