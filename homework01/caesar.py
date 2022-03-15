@@ -52,7 +52,7 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
             i -= shift
         A.append(i)
     result = [chr(c) for c in A]
-    return ''.join(result)
+    return "".join(result)
 
 
 def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
@@ -64,8 +64,8 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     return best_shift
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # x = encrypt_caesar('1@ABCDabcdUuWXYZwxyz')
-    x = encrypt_caesar('pYThoN3.8')
+    x = encrypt_caesar("pYThoN3.8")
     print(x)
     print(decrypt_caesar(x))
