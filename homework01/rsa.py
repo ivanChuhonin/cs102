@@ -48,9 +48,11 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
     elif p == q:
         raise ValueError("p and q cannot be equal")
 
+    n = 0
     # n = pq
     # PUT YOUR CODE HERE
 
+    phi = 0
     # phi = (p-1)(q-1)
     # PUT YOUR CODE HERE
 
