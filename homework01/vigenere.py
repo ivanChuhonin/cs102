@@ -7,6 +7,7 @@ dict = list(string.ascii_uppercase)  # + dicta
 def findIdx(c):
     return dict.index(c)
 
+
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
     Encrypts plaintext using a Vigenere cipher.
