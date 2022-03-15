@@ -25,7 +25,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
             i += shift
         A.append(i)
     result = [chr(c) for c in A]
-    return ''.join(result)
+    return "".join(result)
 
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
