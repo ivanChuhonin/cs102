@@ -1,7 +1,8 @@
 import string
 
 dictA = [chr(i) for i in range(65, 91)]
-dict = list(string.ascii_uppercase) # + dicta
+dict = list(string.ascii_uppercase)  # + dicta
+
 
 def findIdx(c):
     return dict.index(c)
