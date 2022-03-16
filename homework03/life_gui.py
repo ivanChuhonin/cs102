@@ -7,17 +7,29 @@ from ui import UI
 class GUI(UI):
     def __init__(self, life: GameOfLife, cell_size: int = 10, speed: int = 10) -> None:
         super().__init__(life)
-        self.screen = pygame.display.set_mode((life.rows*cell_size, life.cols*cell_size))
+        self.screen = pygame.display.set_mode(
+            (life.rows * cell_size, life.cols * cell_size)
+        )
         self.cell_size = cell_size
         self.speed = speed
 
     def draw_lines(self) -> None:
         for x in range(0, self.life.rows):
             xp = self.cell_size * x
-            pygame.draw.line(self.screen, pygame.Color("black"), (xp, 0), (xp, self.life.cols*self.cell_size))
+            pygame.draw.line(
+                self.screen,
+                pygame.Color("black"),
+                (xp, 0),
+                (xp, self.life.cols * self.cell_size),
+            )
         for y in range(0, self.life.cols):
             yp = self.cell_size * y
-            pygame.draw.line(self.screen, pygame.Color("black"), (0, yp), (self.life.rows*self.cell_size, yp))
+            pygame.draw.line(
+                self.screen,
+                pygame.Color("black"),
+                (0, yp),
+                (self.life.rows * self.cell_size, yp),
+            )
         pass
 
     def draw_grid(self) -> None:
@@ -25,9 +37,13 @@ class GUI(UI):
         for line in self.life.curr_generation:
             x = 0
             for item in line:
-                color = pygame.Color('green') if item == 1 else pygame.Color('white')
-                rect = [1 + y * self.cell_size, 1 + x * self.cell_size,
-                        self.cell_size - 1, self.cell_size - 1]
+                color = pygame.Color("green") if item == 1 else pygame.Color("white")
+                rect = [
+                    1 + y * self.cell_size,
+                    1 + x * self.cell_size,
+                    self.cell_size - 1,
+                    self.cell_size - 1,
+                ]
                 pygame.draw.rect(self.screen, color, rect)
                 x += 1
             y += 1
@@ -41,11 +57,13 @@ class GUI(UI):
 
         running = True
         while running:
-            if self.life.curr_generation == self.life.max_generations or \
-                    self.life.is_changing is False:
+            if (
+                self.life.curr_generation == self.life.max_generations
+                or self.life.is_changing is False
+            ):
                 running = False
             for event in pygame.event.get():
-                if event.type == QUIT:
+                if event.type == pygame.QUIT:
                     running = False
             self.draw_lines()
             self.draw_grid()
@@ -59,7 +77,7 @@ class GUI(UI):
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     game = GameOfLife((15, 10), max_generations=50)
     ui = GUI(game)
     ui.run()

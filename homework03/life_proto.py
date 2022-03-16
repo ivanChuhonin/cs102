@@ -29,14 +29,18 @@ class GameOfLife:
         # Скорость протекания игры
         self.speed = speed
 
-        self.grid = []
+        self.grid: Grid = []
 
     def draw_lines(self) -> None:
         """ Отрисовать сетку """
         for x in range(0, self.width, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
+            pygame.draw.line(
+                self.screen, pygame.Color("black"), (x, 0), (x, self.height)
+            )
         for y in range(0, self.height, self.cell_size):
-            pygame.draw.line(self.screen, pygame.Color("black"), (0, y), (self.width, y))
+            pygame.draw.line(
+                self.screen, pygame.Color("black"), (0, y), (self.width, y)
+            )
 
     def draw_grid(self) -> None:
         """
@@ -46,9 +50,13 @@ class GameOfLife:
         for line in self.grid:
             x = 0
             for item in line:
-                color = pygame.Color('green') if item == 1 else pygame.Color('white')
-                rect = [1 + x*self.cell_size, 1 + y*self.cell_size,
-                        self.cell_size-1, self.cell_size-1]
+                color = pygame.Color("green") if item == 1 else pygame.Color("white")
+                rect = [
+                    1 + x * self.cell_size,
+                    1 + y * self.cell_size,
+                    self.cell_size - 1,
+                    self.cell_size - 1,
+                ]
                 pygame.draw.rect(self.screen, color, rect)
                 x += 1
             y += 1
@@ -68,7 +76,7 @@ class GameOfLife:
         running = True
         while running:
             for event in pygame.event.get():
-                if event.type == QUIT:
+                if event.type == pygame.QUIT:
                     running = False
             self.draw_lines()
 
@@ -138,40 +146,40 @@ class GameOfLife:
             if x == 0:
                 result = line1[0:2]
                 result.append(line0[1])
-            elif x == self.cell_width-1:
+            elif x == self.cell_width - 1:
                 result = line1[-2:]
-                result.append(line0[x-1])
+                result.append(line0[x - 1])
             else:
-                result = line1[x - 1:x + 2]
-                result.append(line0[x-1])
-                result.append(line0[x+1])
-        elif y == self.cell_height-1:
+                result = line1[x - 1 : x + 2]
+                result.append(line0[x - 1])
+                result.append(line0[x + 1])
+        elif y == self.cell_height - 1:
             line0 = self.grid[y]
-            line1 = self.grid[y-1]
+            line1 = self.grid[y - 1]
             if x == 0:
                 result = line1[0:2]
                 result.append(line0[1])
-            elif x == self.cell_width-1:
+            elif x == self.cell_width - 1:
                 result = line1[-2:]
-                result.append(line0[x-1])
+                result.append(line0[x - 1])
             else:
-                result = line1[x - 1:x + 2]
-                result.append(line0[x-1])
-                result.append(line0[x+1])
+                result = line1[x - 1 : x + 2]
+                result.append(line0[x - 1])
+                result.append(line0[x + 1])
         else:
             line0 = self.grid[y]
-            line1 = self.grid[y-1]
-            line2 = self.grid[y+1]
+            line1 = self.grid[y - 1]
+            line2 = self.grid[y + 1]
             if x == 0:
                 result = line1[0:2] + line2[0:2]
                 result.append(line0[1])
-            elif x == self.cell_width-1:
+            elif x == self.cell_width - 1:
                 result = line1[-2:] + line2[-2:]
-                result.append(line0[x-1])
+                result.append(line0[x - 1])
             else:
-                result = line1[x - 1:x + 2] + line2[x - 1:x + 2]
-                result.append(line0[x-1])
-                result.append(line0[x+1])
+                result = line1[x - 1 : x + 2] + line2[x - 1 : x + 2]
+                result.append(line0[x - 1])
+                result.append(line0[x + 1])
 
         return result
 
@@ -204,40 +212,40 @@ class GameOfLife:
             if yy == 0:
                 result = line1[0:2]
                 result.append(line0[1])
-            elif yy == self.cell_width-1:
+            elif yy == self.cell_width - 1:
                 result = line1[-2:]
-                result.append(line0[yy-1])
+                result.append(line0[yy - 1])
             else:
-                result = line1[yy - 1:yy + 2]
-                result.append(line0[yy-1])
-                result.append(line0[yy+1])
-        elif xx == self.cell_height-1:
+                result = line1[yy - 1 : yy + 2]
+                result.append(line0[yy - 1])
+                result.append(line0[yy + 1])
+        elif xx == self.cell_height - 1:
             line0 = self.grid[xx]
-            line1 = self.grid[xx-1]
+            line1 = self.grid[xx - 1]
             if yy == 0:
                 result = line1[0:2]
                 result.append(line0[1])
-            elif yy == self.cell_width-1:
+            elif yy == self.cell_width - 1:
                 result = line1[-2:]
-                result.append(line0[yy-1])
+                result.append(line0[yy - 1])
             else:
-                result = line1[yy - 1:yy + 2]
-                result.append(line0[yy-1])
-                result.append(line0[yy+1])
+                result = line1[yy - 1 : yy + 2]
+                result.append(line0[yy - 1])
+                result.append(line0[yy + 1])
         else:
             line0 = self.grid[xx]
-            line1 = self.grid[xx-1]
-            line2 = self.grid[xx+1]
+            line1 = self.grid[xx - 1]
+            line2 = self.grid[xx + 1]
             if yy == 0:
                 result = line1[0:2] + line2[0:2]
                 result.append(line0[1])
-            elif yy == self.cell_width-1:
+            elif yy == self.cell_width - 1:
                 result = line1[-2:] + line2[-2:]
-                result.append(line0[yy-1])
+                result.append(line0[yy - 1])
             else:
-                result = line1[yy - 1:yy + 2] + line2[yy - 1:yy + 2]
-                result.append(line0[yy-1])
-                result.append(line0[yy+1])
+                result = line1[yy - 1 : yy + 2] + line2[yy - 1 : yy + 2]
+                result.append(line0[yy - 1])
+                result.append(line0[yy + 1])
 
         return result
 
@@ -274,6 +282,6 @@ class GameOfLife:
         return newGrid
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     game = GameOfLife(320, 240, 20)
     game.run()

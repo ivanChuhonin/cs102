@@ -9,10 +9,10 @@ Grid = tp.List[Cells]
 
 class GameOfLife:
     def __init__(
-            self,
-            size: tp.Tuple[int, int],
-            randomize: bool = True,
-            max_generations: tp.Optional[float] = float("inf"),
+        self,
+        size: tp.Tuple[int, int],
+        randomize: bool = True,
+        max_generations: tp.Optional[float] = float("inf"),
     ) -> None:
         # Размер клеточного поля
         self.rows, self.cols = size
@@ -52,7 +52,7 @@ class GameOfLife:
                 result = line1[-2:]
                 result.append(line0[x - 1])
             else:
-                result = line1[x - 1:x + 2]
+                result = line1[x - 1 : x + 2]
                 result.append(line0[x - 1])
                 result.append(line0[x + 1])
         elif y == self.rows - 1:
@@ -65,7 +65,7 @@ class GameOfLife:
                 result = line1[-2:]
                 result.append(line0[x - 1])
             else:
-                result = line1[x - 1:x + 2]
+                result = line1[x - 1 : x + 2]
                 result.append(line0[x - 1])
                 result.append(line0[x + 1])
         else:
@@ -79,7 +79,7 @@ class GameOfLife:
                 result = line1[-2:] + line2[-2:]
                 result.append(line0[x - 1])
             else:
-                result = line1[x - 1:x + 2] + line2[x - 1:x + 2]
+                result = line1[x - 1 : x + 2] + line2[x - 1 : x + 2]
                 result.append(line0[x - 1])
                 result.append(line0[x + 1])
 
@@ -101,7 +101,7 @@ class GameOfLife:
                 result = line1[-2:]
                 result.append(line0[yy - 1])
             else:
-                result = line1[yy - 1:yy + 2]
+                result = line1[yy - 1 : yy + 2]
                 result.append(line0[yy - 1])
                 result.append(line0[yy + 1])
         elif xx == self.rows - 1:
@@ -114,7 +114,7 @@ class GameOfLife:
                 result = line1[-2:]
                 result.append(line0[yy - 1])
             else:
-                result = line1[yy - 1:yy + 2]
+                result = line1[yy - 1 : yy + 2]
                 result.append(line0[yy - 1])
                 result.append(line0[yy + 1])
         else:
@@ -128,7 +128,7 @@ class GameOfLife:
                 result = line1[-2:] + line2[-2:]
                 result.append(line0[yy - 1])
             else:
-                result = line1[yy - 1:yy + 2] + line2[yy - 1:yy + 2]
+                result = line1[yy - 1 : yy + 2] + line2[yy - 1 : yy + 2]
                 result.append(line0[yy - 1])
                 result.append(line0[yy + 1])
 
@@ -177,7 +177,10 @@ class GameOfLife:
         """
         Не превысило ли текущее число поколений максимально допустимое.
         """
-        return self.max_generations >= self.generations
+        if self.max_generations is None:
+            return False;
+        mgf: float = self.max_generations
+        return int(mgf) >= self.generations
 
     @property
     def is_changing(self) -> bool:
@@ -208,7 +211,7 @@ class GameOfLife:
         """
         myOutput = ""
         for line in self.curr_generation:
-            newLine = ''.join([str(i) for i in line]) + '\n'
+            newLine = "".join([str(i) for i in line]) + "\n"
             myOutput += newLine
 
         f = open(filename, "w")
@@ -217,7 +220,7 @@ class GameOfLife:
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # game = GameOfLife.from_file('glider.txt')
     game = GameOfLife((6, 8), max_generations=18)
     game.curr_generation = [

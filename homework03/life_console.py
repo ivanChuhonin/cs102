@@ -11,8 +11,8 @@ class Console(UI):
 
     def draw_borders(self, screen) -> None:
         """ Отобразить рамку. """
-        line0 = '+' + '-' * self.life.cols + '+'
-        line1 = '|' + ' ' * self.life.cols + '|'
+        line0 = "+" + "-" * self.life.cols + "+"
+        line1 = "|" + " " * self.life.cols + "|"
         screen.addstr(0, 0, line0)
         for x in range(self.life.rows):
             screen.addstr(x + 1, 0, line1)
@@ -23,7 +23,7 @@ class Console(UI):
         """ Отобразить состояние клеток. """
         for x in range(self.life.rows):
             items = self.life.curr_generation[x]
-            line1 = '|' + ''.join([str(' ' if i == 0 else '*') for i in items]) + '|'
+            line1 = "|" + "".join([str(" " if i == 0 else "*") for i in items]) + "|"
             screen.addstr(x + 1, 0, line1)
         # screen.getch()
         screen.refresh()
@@ -36,8 +36,10 @@ class Console(UI):
         self.draw_grid(screen)
         running = True
         while running:
-            if self.life.curr_generation == self.life.max_generations or \
-                    self.life.is_changing is False:
+            if (
+                self.life.curr_generation == self.life.max_generations
+                or self.life.is_changing is False
+            ):
                 running = False
             time.sleep(1)
             self.life.prev_generation = self.life.curr_generation
@@ -47,7 +49,7 @@ class Console(UI):
         curses.endwin()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     game = GameOfLife((5, 80), max_generations=50)
     ui = Console(game)
     ui.run()
