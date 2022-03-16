@@ -10,7 +10,7 @@ class Console(UI):
         super().__init__(life)
 
     def draw_borders(self, screen) -> None:
-        """ Отобразить рамку. """
+        """Отобразить рамку."""
         line0 = "+" + "-" * self.life.cols + "+"
         line1 = "|" + " " * self.life.cols + "|"
         screen.addstr(0, 0, line0)
@@ -20,7 +20,7 @@ class Console(UI):
         pass
 
     def draw_grid(self, screen) -> None:
-        """ Отобразить состояние клеток. """
+        """Отобразить состояние клеток."""
         for x in range(self.life.rows):
             items = self.life.curr_generation[x]
             line1 = "|" + "".join([str(" " if i == 0 else "*") for i in items]) + "|"

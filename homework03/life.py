@@ -178,7 +178,7 @@ class GameOfLife:
         Не превысило ли текущее число поколений максимально допустимое.
         """
         if self.max_generations is None:
-            return False;
+            return False
         mgf: float = self.max_generations
         return int(mgf) >= self.generations
 
