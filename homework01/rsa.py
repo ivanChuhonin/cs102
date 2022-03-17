@@ -7,10 +7,10 @@ def is_prime(n: int) -> bool:
         return False
     if n % 2 == 0:
         return n == 2
-    d = 3
-    while d * d <= n and n % d != 0:
-        d += 2
-    return d * d > n
+    f = 3
+    while f * f <= n and n % f != 0:
+        f += 2
+    return f * f > n
 
 
 def gcd(a: int, b: int) -> int:
@@ -20,16 +20,16 @@ def gcd(a: int, b: int) -> int:
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
-    div = []
+    var = []
     while e != 0:
-        div.append((phi, e, phi % e, phi // e))
+        var.append((phi, e, phi % e, phi // e))
         phi, e = e, phi % e
     x = 0
     y = 1
-    for i in range(len(div) - 1, 0, -1):
-        x, y = y, x - y * div[i - 1][3]
-    res = y % div[0][0]
-    return res
+    for i in range(len(var) - 1, 0, -1):
+        x, y = y, x - y * var[i - 1][3]
+    result = y % var[0][0]
+    return result
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
