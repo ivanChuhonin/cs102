@@ -182,7 +182,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         pos = row, col
         testRow = get_row(solution, pos)
         if (len(possibleValues.intersection(set(testRow))) != 9) or find_empty_positions(
-                solution
+            solution
         ) is not None:
             return False
 
@@ -192,7 +192,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         pos = row, col
         testCol = get_col(solution, pos)
         if (len(possibleValues.intersection(set(testCol))) != 9) or find_empty_positions(
-                solution
+            solution
         ) is not None:
             return False
 
@@ -202,7 +202,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
             pos = row, col
             testBlock = get_block(solution, pos)
             if (len(possibleValues.intersection(set(testBlock))) != 9) or find_empty_positions(
-                    solution
+                solution
             ) is not None:
                 return False
 
