@@ -123,9 +123,7 @@ def find_empty_positions(
     return None
 
 
-def find_possible_values(
-    grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]
-) -> tp.Set[str]:
+def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
     """Вернуть множество возможных значения для указанной позиции
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -144,8 +142,10 @@ def find_possible_values(
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
-    """ Решение пазла, заданного в grid """
-    """ Как решать Судоку?
+    """
+    Решение пазла, заданного в grid
+
+    Как решать Судоку?
         1. Найти свободную позицию
         2. Найти все возможные значения, которые могут находиться на этой позиции
         3. Для каждого возможного значения:
@@ -170,7 +170,9 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
-    """ Если решение solution верно, то вернуть True, в противном случае False """
+    """
+    Если решение solution верно, то вернуть True, в противном случае False
+    """
     # TODO: Add doctests with bad puzzles
     possibleValues = {s for s in list("123456789")}
 
@@ -179,9 +181,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     for row in range(len(solution)):
         pos = row, col
         testRow = get_row(solution, pos)
-        if (
-            len(possibleValues.intersection(set(testRow))) != 9
-        ) or find_empty_positions(solution) is not None:
+        if (len(possibleValues.intersection(set(testRow))) != 9) or find_empty_positions(solution) is not None:
             return False
 
     # Checking cols
@@ -189,9 +189,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     for col in range(len(solution)):
         pos = row, col
         testCol = get_col(solution, pos)
-        if (
-            len(possibleValues.intersection(set(testCol))) != 9
-        ) or find_empty_positions(solution) is not None:
+        if (len(possibleValues.intersection(set(testCol))) != 9) or find_empty_positions(solution) is not None:
             return False
 
     # Checking blocks
@@ -199,9 +197,7 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         for col in range(0, len(solution), 3):
             pos = row, col
             testBlock = get_block(solution, pos)
-            if (
-                len(possibleValues.intersection(set(testBlock))) != 9
-            ) or find_empty_positions(solution) is not None:
+            if (len(possibleValues.intersection(set(testBlock))) != 9) or find_empty_positions(solution) is not None:
                 return False
 
     return True
@@ -219,7 +215,8 @@ def randomize(arr: tp.List[tp.List[str]]):
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
-    """Генерация судоку заполненного на N элементов
+    """
+    Генерация судоку заполненного на N элементов
 
     >>> grid = generate_sudoku(40)
     >>> sum(1 for row in grid for e in row if e == '.')
