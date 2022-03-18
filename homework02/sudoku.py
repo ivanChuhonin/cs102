@@ -181,7 +181,9 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     for row in range(len(solution)):
         pos = row, col
         testRow = get_row(solution, pos)
-        if (len(possibleValues.intersection(set(testRow))) != 9) or find_empty_positions(solution) is not None:
+        if (len(possibleValues.intersection(set(testRow))) != 9) or find_empty_positions(
+                solution
+        ) is not None:
             return False
 
     # Checking cols
@@ -189,7 +191,9 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     for col in range(len(solution)):
         pos = row, col
         testCol = get_col(solution, pos)
-        if (len(possibleValues.intersection(set(testCol))) != 9) or find_empty_positions(solution) is not None:
+        if (len(possibleValues.intersection(set(testCol))) != 9) or find_empty_positions(
+                solution
+        ) is not None:
             return False
 
     # Checking blocks
@@ -197,7 +201,9 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
         for col in range(0, len(solution), 3):
             pos = row, col
             testBlock = get_block(solution, pos)
-            if (len(possibleValues.intersection(set(testBlock))) != 9) or find_empty_positions(solution) is not None:
+            if (len(possibleValues.intersection(set(testBlock))) != 9) or find_empty_positions(
+                    solution
+            ) is not None:
                 return False
 
     return True
