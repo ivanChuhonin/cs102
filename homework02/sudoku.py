@@ -248,10 +248,13 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
         return default_data
 
     result = solve(default_data)
+    if result is None:
+        return default_data
 
+    resultSolved: tp.List[tp.List[str]] = result
     for step in range(81 - N):
-        result = randomize(result)
-    return result
+        resultSolved = randomize(resultSolved)
+    return resultSolved
 
 
 if __name__ == "__main__":
