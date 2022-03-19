@@ -147,7 +147,8 @@ def shortest_path(
             elif grid[i][j + 1] == k - 1:
                 i, j = i, j + 1
 
-            k -= 1
+            if k is not None:
+                k -= 1
             result.append((i, j))
 
     return result
