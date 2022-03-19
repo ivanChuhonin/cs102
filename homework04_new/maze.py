@@ -138,17 +138,17 @@ def shortest_path(
 
     while k != 1:
         if grid[i][j] == k:
-            if grid[i - 1][j] == k - 1:
-                i, j = i - 1, j
-            elif grid[i + 1][j] == k - 1:
-                i, j = i + 1, j
-            elif grid[i][j - 1] == k - 1:
-                i, j = i, j - 1
-            elif grid[i][j + 1] == k - 1:
-                i, j = i, j + 1
-
             if type(k) is int:
                 k -= 1
+                if grid[i - 1][j] == k:
+                    i, j = i - 1, j
+                elif grid[i + 1][j] == k:
+                    i, j = i + 1, j
+                elif grid[i][j - 1] == k:
+                    i, j = i, j - 1
+                elif grid[i][j + 1] == k:
+                    i, j = i, j + 1
+
             result.append((i, j))
 
     return result
