@@ -169,6 +169,32 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     return None
 
 
+def get_block_grid(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[tp.List[str]]:
+    """Возвращает все значения из квадрата, в который попадает позиция pos
+    """
+    firstRow = (pos[0] // 3) * 3
+    firstCol = (pos[1] // 3) * 3
+
+    result: tp.List[tp.List[str]] = []
+    for row in range(firstRow, firstRow + 3):
+        line: tp.List[str] = []
+        for col in range(firstCol, firstCol + 3):
+            line.append(grid[row][col])
+        result.append(line)
+
+    return result
+
+
+def get_unique(diagonal: tp.List[str]) -> bool:
+    unique_list: tp.List[str] = []
+    for x in diagonal:
+        if x not in unique_list:
+            unique_list.append(x)
+        else:
+            return False
+    return True
+
+
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """
     Если решение solution верно, то вернуть True, в противном случае False
@@ -204,6 +230,21 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
             if (len(possibleValues.intersection(set(testBlock))) != 9) or find_empty_positions(
                 solution
             ) is not None:
+                return False
+
+    # Checking blocks diagonal
+    for row in range(0, len(solution), 3):
+        for col in range(0, len(solution), 3):
+            pos = row, col
+            testBlock = get_block_grid(solution, pos)
+            diagonal1: tp.List[str] = []
+            for i in range(0,len(testBlock)):
+                diagonal1.append(testBlock[i][i])
+            diagonal2: tp.List[str] = []
+            for i in range(0,len(testBlock)):
+                diagonal2.append(testBlock[i][2-i])
+
+            if get_unique(diagonal1) == False or get_unique(diagonal2) == False or find_empty_positions(testBlock) is not None:
                 return False
 
     return True
@@ -262,6 +303,7 @@ if __name__ == "__main__":
         grid = read_sudoku(fname)
         display(grid)
         solution = solve(grid)
+        check_solution(solution)
         if not solution:
             print(f"Puzzle {fname} can't be solved")
         else:
