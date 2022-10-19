@@ -8,7 +8,7 @@ from vkapi.wall import get_wall_execute
 
 
 def example():
-    posts = get_wall_execute(domain="rbc", count=5000, max_count=1000, progress=tqdm)
+    posts = get_wall_execute(owner_id="296799824", domain="itmoru", count=5000, max_count=1000, progress=tqdm)
     stopwords = list(map(str.strip, open("stop_words.txt")))
     text_no_urls = map(preprocessing.replace.replace_urls, posts.text.dropna().to_list())
     text_no_punct = map(preprocessing.remove_punctuation, text_no_urls)

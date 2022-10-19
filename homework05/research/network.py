@@ -10,15 +10,27 @@ from vkapi.friends import get_friends, get_mutual
 
 
 def ego_network(
-    user_id: tp.Optional[int] = None, friends: tp.Optional[tp.List[int]] = None
-) -> tp.List[tp.Tuple[int, int]]:
+    user_id: tp.Optional[int] = None, friends: tp.Optional[tp.List[int]] = None) -> tp.List[tp.Tuple[int, int]]:
     """
     Построить эгоцентричный граф друзей.
 
     :param user_id: Идентификатор пользователя, для которого строится граф друзей.
     :param friends: Идентификаторы друзей, между которыми устанавливаются связи.
     """
-    pass
+    friends_response = get_friends(user_id, fields=["nickname"])
+    active_users = [user["id"] for user in friends_response.items if not user.get("deactivated")]
+    mutual_friends = get_mutual(source_uid=user_id, target_uids=active_users)
+
+    friends_list = []
+    for some_friend in mutual_friends:
+        friend_id = some_friend["id"]
+        for common_friend in some_friend["common_friends"]:
+            friends_list.append((friend_id, common_friend))
+
+    communities = get_communities(friends_list)
+    print(describe_communities(communities, friends_response.items, fields=["first_name"]))
+
+    return friends_list
 
 
 def plot_ego_network(net: tp.List[tp.Tuple[int, int]]) -> None:
@@ -66,3 +78,9 @@ def describe_communities(
                     data.append([cluster_n] + [friend.get(field) for field in fields])  # type: ignore
                     break
     return pd.DataFrame(data=data, columns=["cluster"] + fields)
+
+
+if __name__ == "__main__":
+    net = ego_network(user_id=275510891)
+    plot_ego_network(net)
+    # plot_communities(net)
