@@ -4,8 +4,8 @@ import time
 import typing as tp
 
 from vkapi import config
-from vkapi.session import Session
 from vkapi.exceptions import APIError
+from vkapi.session import Session
 
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 
