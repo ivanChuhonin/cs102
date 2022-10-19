@@ -46,7 +46,7 @@ class GameOfLife:
         for line in self.grid:
             x = 0
             for item in line:
-                color = pygame.Color("green") if item == 1 else pygame.Color("white")
+                color = pygame.Color("red") if item == 1 else pygame.Color("white")
                 rect = [
                     1 + x * self.cell_size,
                     1 + y * self.cell_size,
@@ -278,5 +278,5 @@ class GameOfLife:
 
 
 if __name__ == "__main__":
-    game = GameOfLife(320, 240, 20)
+    game = GameOfLife(420, 440, 20)
     game.run()

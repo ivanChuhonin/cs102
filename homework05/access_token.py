@@ -12,7 +12,7 @@ def get_access_token(client_id: int, scope: str) -> None:
     scope={scope}&\
     &response_type=token&\
     display=page&\
-    v=5.102\
+    v=5.131\
     """.replace(
         " ", ""
     )

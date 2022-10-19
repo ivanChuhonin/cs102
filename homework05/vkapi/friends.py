@@ -3,7 +3,8 @@ import math
 import time
 import typing as tp
 
-from vkapi import config, session
+from vkapi import config
+from vkapi.session import Session
 from vkapi.exceptions import APIError
 
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
@@ -28,7 +29,30 @@ def get_friends(
     :param fields: Список полей, которые нужно получить для каждого пользователя.
     :return: Список идентификаторов друзей пользователя или список пользователей.
     """
-    pass
+    access_token = config.VK_CONFIG["access_token"]
+    version = config.VK_CONFIG["version"]
+    response = FriendsResponse(0, [0])
+    domain = config.VK_CONFIG["domain"]
+    session = Session(domain)
+
+    try:
+        friends_list = session.get(
+            "friends.get",
+            params={
+                "access_token": access_token,
+                "v": version,
+                "user_id": user_id,
+                "count": count,
+                "offset": offset,
+                "fields": fields})
+
+        response = FriendsResponse(
+            friends_list.json()["response"]["count"],
+            friends_list.json()["response"]["items"])
+
+    except:
+        pass
+    return response
 
 
 class MutualFriends(tp.TypedDict):
@@ -57,4 +81,58 @@ def get_mutual(
     :param offset: Смещение, необходимое для выборки определенного подмножества общих друзей.
     :param progress: Callback для отображения прогресса.
     """
-    pass
+    access_token = config.VK_CONFIG["access_token"]
+    version = config.VK_CONFIG["version"]
+    domain = config.VK_CONFIG["domain"]
+    block = 100
+    session = Session(domain)
+    result = []
+
+    if target_uids:
+        call_count = ((len(target_uids) - 1) // 100) + 1
+        for i in range(call_count):
+            try:
+                mutual_friends = session.get(
+                    "friends.getMutual",
+                    params={
+                        "access_token": access_token,
+                        "v": version,
+                        "source_uid": source_uid,
+                        "target_uid": target_uid,
+                        "target_uids": ",".join(list(map(str, target_uids))),
+                        "order": order,
+                        "count": block,
+                        "offset": i * block,
+                    },
+                )
+                for friend in mutual_friends.json()["response"]:
+                    result.append(
+                        MutualFriends(
+                            id=friend["id"],
+                            common_friends=list(map(int, friend["common_friends"])),
+                            common_count=friend["common_count"],
+                        )
+                    )
+            except:
+                pass
+            time.sleep(0.5)
+        return result
+    try:
+        mutual_friends = session.get(
+            "friends.getMutual",
+            params={
+                "access_token": access_token,
+                "v": version,
+                "source_uid": source_uid,
+                "target_uid": target_uid,
+                "target_uids": target_uids,
+                "order": order,
+                "count": count,
+                "offset": offset,
+            },
+        )
+        result.extend(mutual_friends.json()["response"])
+
+    except:
+        pass
+    return result
